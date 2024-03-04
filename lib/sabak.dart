@@ -144,3 +144,25 @@ class SuroolordunServisi {
     return 'Atin kim?';
   }
 }
+
+
+
+/// if else, eger je bolboso
+/// limonad je tarhun
+/// Suusunduk linomadAlipKel(){
+///   1. limonad barbi?
+///   2. bar bolso al
+///   3. jok bolso
+///   4. tarhun barbi?
+///   5. tarhun bolso
+///   6. tarhun al
+/// 
+///   if(limonad) { 
+///    return Limonad();
+///   } else {
+///    return Tarhun();
+///   }
+/// 
+/// 
+/// 
+/// }

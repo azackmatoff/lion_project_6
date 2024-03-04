@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lion_project_6/questions_service.dart';
 
@@ -63,9 +65,7 @@ class _QuizPageState extends State<QuizPage> {
                       ),
                     ),
                     onPressed: () {
-                      icons.add(correctIcon);
-                      service.kiyinkiSurooOt();
-                      setState(() {});
+                      jooptuTeksher(koldonuuchununJoobu: true);
                     },
                   ),
                 ),
@@ -90,9 +90,7 @@ class _QuizPageState extends State<QuizPage> {
                       ),
                     ),
                     onPressed: () {
-                      icons.add(falseIcon);
-                      service.kiyinkiSurooOt();
-                      setState(() {});
+                      jooptuTeksher(koldonuuchununJoobu: false);
                     },
                   ),
                 ),
@@ -108,5 +106,32 @@ class _QuizPageState extends State<QuizPage> {
         ),
       ),
     );
+  }
+
+  void jooptuTeksher({required bool koldonuuchununJoobu}) {
+    /// DRY - Don't Repeat Yourself
+    /// KISS - Keep It Simple Stupid
+
+    bool buttu = service.suroolorButtu();
+    print('buttu: $buttu');
+
+    if (buttu == false) {
+      //// ikonka kosh bashtalishi
+      // print('koldonuuchununJoobu: $koldonuuchununJoobu');
+      bool tuuraJoop = service.tuuraJooptuBer();
+
+      // print('tuuraJoop: $tuuraJoop');
+      if (koldonuuchununJoobu == tuuraJoop) {
+        icons.add(correctIcon);
+      } else {
+        icons.add(falseIcon);
+      }
+
+      //// ikonka kosh butushu
+
+      service.kiyinkiSurooOt();
+
+      setState(() {});
+    }
   }
 }
