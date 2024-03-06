@@ -49,6 +49,6 @@ class QuestionsService {
 
   // 7. kayradan bashta
   void kayradanBashta() {
-    /// usherge kod jazabiz
+    index = 0;
   }
 }

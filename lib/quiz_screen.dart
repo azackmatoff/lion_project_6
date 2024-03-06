@@ -112,26 +112,45 @@ class _QuizPageState extends State<QuizPage> {
     /// DRY - Don't Repeat Yourself
     /// KISS - Keep It Simple Stupid
 
+    bool tuuraJoop = service.tuuraJooptuBer();
+
+    if (koldonuuchununJoobu == tuuraJoop) {
+      icons.add(correctIcon);
+    } else {
+      icons.add(falseIcon);
+    }
+
     bool buttu = service.suroolorButtu();
-    print('buttu: $buttu');
 
     if (buttu == false) {
-      //// ikonka kosh bashtalishi
-      // print('koldonuuchununJoobu: $koldonuuchununJoobu');
-      bool tuuraJoop = service.tuuraJooptuBer();
-
-      // print('tuuraJoop: $tuuraJoop');
-      if (koldonuuchununJoobu == tuuraJoop) {
-        icons.add(correctIcon);
-      } else {
-        icons.add(falseIcon);
-      }
-
-      //// ikonka kosh butushu
-
       service.kiyinkiSurooOt();
-
-      setState(() {});
+    } else {
+      openDialog();
     }
+
+    setState(() {});
+  }
+
+  void openDialog() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Finished!'),
+        content: Text('You\'ve reached the end of the quiz.'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Restart'),
+            onPressed: () {
+              service.kayradanBashta();
+              // icons.clear();
+              icons = [];
+              Navigator.of(ctx).pop();
+
+              setState(() {});
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
