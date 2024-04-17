@@ -1,6 +1,6 @@
 class Question {
-  late String question;
-  late bool answer;
+  final String question;
+  final bool answer;
 
   Question({
     required this.answer,

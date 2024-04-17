@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lion_project_6/quiz_screen.dart';
+import 'package:lion_project_6/flutter_set_state/screens/quiz_screen.dart';
 
 void main() {
   runApp(const MyApp());
