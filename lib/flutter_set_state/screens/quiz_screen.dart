@@ -65,11 +65,7 @@ class _QuizPageState extends State<QuizPage> {
     required bool userAnswer,
     required bool correctAnswer,
   }) {
-    if (userAnswer == correctAnswer) {
-      icons.add(AppIcons.correctIcon);
-    } else {
-      icons.add(AppIcons.falseIcon);
-    }
+    userAnswer == correctAnswer ? icons.add(AppIcons.correctIcon) : icons.add(AppIcons.falseIcon);
   }
 
   void _openDialog() {
