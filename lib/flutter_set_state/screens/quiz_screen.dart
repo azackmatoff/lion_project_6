@@ -56,13 +56,9 @@ class _QuizPageState extends State<QuizPage> {
   void _checkAnswer({required bool userAnswer}) {
     _addIcon(userAnswer: userAnswer, correctAnswer: service.getAnswer());
 
-    if (!service.isFinished()) {
-      service.goToNext();
-    } else {
-      _openDialog();
-    }
-
-    setState(() {});
+    setState(() {
+      !service.isFinished() ? service.goToNext() : _openDialog();
+    });
   }
 
   void _addIcon({
