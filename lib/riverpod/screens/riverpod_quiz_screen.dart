@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:lion_project_6/common/services/questions_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:lion_project_6/common/constants/color/app_color.dart';
-import 'package:lion_project_6/common/constants/icons/app_icons.dart';
 import 'package:lion_project_6/common/widgets/buttons/custom_button.dart';
 import 'package:lion_project_6/common/widgets/custom_text.dart';
 import 'package:lion_project_6/common/widgets/dialogs/custom_dialog.dart';
+import 'package:lion_project_6/riverpod/providers/quiz_screen_provider.dart';
 
-class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+class RiverpodQuizScreen extends ConsumerStatefulWidget {
+  const RiverpodQuizScreen({super.key});
 
   @override
-  _QuizScreenState createState() => _QuizScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _RiverpodQuizScreenState();
 }
 
-class _QuizScreenState extends State<QuizScreen> {
-  List<Widget> icons = [];
-
+class _RiverpodQuizScreenState extends ConsumerState<RiverpodQuizScreen> {
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(quizScreenNotifierProvider);
+
     return Scaffold(
       backgroundColor: AppColor.bgColor,
       body: SafeArea(
@@ -27,12 +28,10 @@ class _QuizScreenState extends State<QuizScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              CustomText(text: service.nextQuestion()),
+              CustomText(text: state.question),
               CustomButton(
                 text: 'TRUE',
-                onPressed: () {
-                  _checkAnswer(userAnswer: true);
-                },
+                onPressed: () => _checkAnswer(userAnswer: true),
                 backgroundColor: AppColor.green,
               ),
               CustomButton(
@@ -43,7 +42,7 @@ class _QuizScreenState extends State<QuizScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(
-                  children: icons,
+                  children: state.icons,
                 ),
               ),
             ],
@@ -54,30 +53,19 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _checkAnswer({required bool userAnswer}) {
-    _addIcon(userAnswer: userAnswer, correctAnswer: service.getAnswer());
+    final isOpenDialog =
+        ref.read(quizScreenNotifierProvider.notifier).checkAnswerAndOpenDialogIfNeeded(userAnswer: userAnswer);
 
-    setState(() {
-      !service.isFinished() ? service.goToNext() : _openDialog();
-    });
-  }
-
-  void _addIcon({
-    required bool userAnswer,
-    required bool correctAnswer,
-  }) {
-    userAnswer == correctAnswer ? icons.add(AppIcons.correctIcon) : icons.add(AppIcons.falseIcon);
+    if (isOpenDialog) _openDialog();
   }
 
   void _openDialog() {
     openDialog(
       context,
       () {
-        service.restart();
-        icons.clear();
+        ref.read(quizScreenNotifierProvider.notifier).restart();
 
         Navigator.of(context).pop();
-
-        setState(() {});
       },
     );
   }
