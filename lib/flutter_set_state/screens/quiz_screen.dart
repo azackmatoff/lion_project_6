@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:lion_project_6/common/services/questions_service.dart';
 import 'package:lion_project_6/common/constants/color/app_color.dart';
@@ -18,6 +20,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('QuizScreen');
     return Scaffold(
       backgroundColor: AppColor.bgColor,
       body: SafeArea(

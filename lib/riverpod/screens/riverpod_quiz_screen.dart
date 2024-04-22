@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,6 +19,7 @@ class RiverpodQuizScreen extends ConsumerStatefulWidget {
 class _RiverpodQuizScreenState extends ConsumerState<RiverpodQuizScreen> {
   @override
   Widget build(BuildContext context) {
+    log('RiverpodQuizScreen');
     final state = ref.watch(quizScreenNotifierProvider);
 
     return Scaffold(

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lion_project_6/bloc/cubit_approach/cubit/quiz_cubit_state.dart';
 import 'package:lion_project_6/common/constants/icons/app_icons.dart';
 import 'package:lion_project_6/common/services/questions_service.dart';
-import 'package:lion_project_6/riverpod/providers/quiz_screen_provider_state.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'quiz_screen_provider.g.dart';
-
-@riverpod
-class QuizScreenNotifier extends _$QuizScreenNotifier {
-  @override
-  QuizScreenProviderState build() => QuizScreenProviderState(icons: [], question: service.nextQuestion());
+class QuizCubit extends Cubit<QuizCubitState> {
+  QuizCubit() : super(QuizCubitState(question: service.nextQuestion(), icons: <Widget>[]));
 
   bool checkAnswerAndOpenDialogIfNeeded({required bool userAnswer}) {
     if (!service.isFinished()) {
@@ -28,9 +24,9 @@ class QuizScreenNotifier extends _$QuizScreenNotifier {
     required bool correctAnswer,
   }) {
     if (userAnswer == correctAnswer) {
-      state = QuizScreenProviderState(icons: _getIcons(true), question: service.nextQuestion());
+      emit(QuizCubitState(icons: _getIcons(true), question: service.nextQuestion()));
     } else {
-      state = QuizScreenProviderState(icons: _getIcons(false), question: service.nextQuestion());
+      emit(QuizCubitState(icons: _getIcons(false), question: service.nextQuestion()));
     }
   }
 
@@ -40,7 +36,7 @@ class QuizScreenNotifier extends _$QuizScreenNotifier {
   }
 
   void _clear() {
-    state = QuizScreenProviderState(icons: [], question: service.nextQuestion());
+    emit(QuizCubitState(icons: <Widget>[], question: service.nextQuestion()));
   }
 
   void restart() {

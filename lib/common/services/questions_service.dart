@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:lion_project_6/common/data/questions_data.dart';
 
 class QuestionsService {
@@ -19,6 +21,7 @@ class QuestionsService {
   void goToNext() {
     if (index < questions.length - 1) {
       index++;
+      log('goToNext.index: $index');
     }
   }
 

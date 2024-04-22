@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lion_project_6/common/constants/color/app_color.dart';
@@ -13,6 +15,7 @@ class GetxQuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('GetxQuizScreen');
     return Scaffold(
       backgroundColor: AppColor.bgColor,
       body: SafeArea(
